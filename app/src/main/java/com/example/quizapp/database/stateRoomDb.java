@@ -7,10 +7,12 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.quizapp.data.State;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = ListEntry.class, version = 1, exportSchema = false)
+@Database(entities = {State.class}, version = 1, exportSchema = false)
 public abstract class stateRoomDb extends RoomDatabase {
 
     public abstract StateDao stateDao();
@@ -21,7 +23,8 @@ public abstract class stateRoomDb extends RoomDatabase {
         if(INSTANCE == null ){
             synchronized (stateRoomDb.class){
                 INSTANCE = Room.
-                        databaseBuilder(context.getApplicationContext(), stateRoomDb.class, "statAndCapital")
+                        databaseBuilder(context.getApplicationContext(), stateRoomDb.class, "State")
+                        .fallbackToDestructiveMigration()
                         .build();
 
             }

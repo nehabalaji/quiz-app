@@ -7,20 +7,22 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.quizapp.data.State;
+
 import java.util.List;
 
 @Dao
 public interface StateDao {
 
-    @Query("SELECT * FROM States_and_capitals")
-    LiveData<List<ListEntry>> loadAllState();
+    @Query("SELECT * FROM State")
+    LiveData<List<State>> loadAllState();
 
     @Insert
-    void insertstate(ListEntry listEntry);
+    void insertstate(State state);
 
     @Delete
-    void deleteState(ListEntry listEntry);
+    void deleteState(State state);
 
     @Update
-    void updateState(ListEntry listEntry);
+    void updateState(State state);
 }
