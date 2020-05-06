@@ -1,6 +1,7 @@
 package com.example.quizapp.database;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -15,7 +16,7 @@ import java.util.List;
 public interface StateDao {
 
     @Query("SELECT * FROM State")
-    LiveData<List<State>> loadAllState();
+    DataSource.Factory<Integer, State> loadAllState();
 
     @Insert
     void insertstate(State state);
