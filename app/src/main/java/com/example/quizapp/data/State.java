@@ -58,4 +58,8 @@ public class State {
     public void setCapitalName(String capitalName) {
         this.capitalName = capitalName;
     }
+
+    public boolean equals(State state){
+        return (stateName==state.getStateName()) && (capitalName==state.getCapitalName());
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.quizapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,9 @@ public class addStateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_state);
 
+        final StateViewModel stateViewModel = new ViewModelProvider(this).get(StateViewModel.class);
+
+
         final EditText state = findViewById(R.id.stateET);
         final EditText capital = findViewById(R.id.capitalET);
         Button add = findViewById(R.id.addButton);
@@ -26,6 +30,7 @@ public class addStateActivity extends AppCompatActivity {
                 String capitalName = capital.getText().toString();
                 if(!(stateName.isEmpty()) && !(capitalName.isEmpty())){
                     State state1 = new State(stateName, capitalName);
+                    stateViewModel.Insert(state1);
                 }
             }
         });
