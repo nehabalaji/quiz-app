@@ -15,6 +15,8 @@ public class statePagingAdapter extends PagedListAdapter<State, stateViewHolder>
         super(itemCallback);
     }
 
+    private ClickListener clickListener;
+
     @NonNull
     @Override
     public stateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -29,6 +31,18 @@ public class statePagingAdapter extends PagedListAdapter<State, stateViewHolder>
         if(currentItem!=null){
             holder.bind(currentItem);
         }
+    }
+
+    public  void setOnItemClockListener(ClickListener clickListener){
+        this.clickListener = clickListener;
+    }
+
+    public interface ClickListener{
+        void onItemClick(View v, int position);
+    }
+
+    public State getStateAtPosition(int position){
+        return getItem(position);
     }
 
     private static DiffUtil.ItemCallback<State> itemCallback = new DiffUtil.ItemCallback<State>() {

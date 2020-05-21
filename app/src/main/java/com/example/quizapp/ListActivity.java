@@ -33,6 +33,13 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
+        mStatePagingAdapter.setOnItemClockListener(new statePagingAdapter.ClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                State cuurentState = statePagingAdapter.getStateAtPosition(position);
+            }
+        });
+
         FloatingActionButton floatingActionButton = findViewById(R.id.floatingButton);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override

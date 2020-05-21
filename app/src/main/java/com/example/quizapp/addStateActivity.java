@@ -12,6 +12,10 @@ import com.example.quizapp.data.State;
 
 public class addStateActivity extends AppCompatActivity {
 
+    public static final String EXTRA_STATE_NAME = "extra_state_name_to_be_updated";
+    public static final String EXTRA_CAPITAL_NAME = "extra_state_capital_to_be_updated";
+    public static final String EXTRA_ID = "extra_state_id";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,5 +38,6 @@ public class addStateActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 }
