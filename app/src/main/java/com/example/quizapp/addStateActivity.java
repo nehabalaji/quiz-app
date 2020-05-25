@@ -17,7 +17,7 @@ public class addStateActivity extends AppCompatActivity {
     public static final String EXTRA_ID = "extra_state_id";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_state);
 
@@ -27,15 +27,41 @@ public class addStateActivity extends AppCompatActivity {
         final EditText state = findViewById(R.id.stateET);
         final EditText capital = findViewById(R.id.capitalET);
         Button add = findViewById(R.id.addButton);
+
+        final Bundle extras = getIntent().getExtras();
+
+        if(extras!=null){
+            String stateName = extras.getString(EXTRA_STATE_NAME);
+            if(!stateName.isEmpty()){
+                state.setText(stateName);
+            }
+
+            String capitalName = extras.getString(EXTRA_CAPITAL_NAME);
+            if(!capitalName.isEmpty()){
+                capital.setText(capitalName);
+                capital.setSelection(capitalName.length());
+                capital.requestFocus();
+            }
+            add.setText("Save");
+        }
+
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String stateName = state.getText().toString();
                 String capitalName = capital.getText().toString();
-                if(!(stateName.isEmpty()) && !(capitalName.isEmpty())){
-                    State state1 = new State(stateName, capitalName);
-                    stateViewModel.Insert(state1);
+                if(extras!=null && extras.containsKey(EXTRA_ID)){
+                    long stateId = extras.getLong(EXTRA_ID, -1);
+                    State state1 = new State(stateId, stateName, capitalName);
+                    stateViewModel.Update(state1);
                 }
+                else{
+                    State state1 = new State(stateName, capitalName);
+                    stateViewModel.Update(state1);
+                }
+
+                setResult(RESULT_OK);
+                finish();
             }
         });
 

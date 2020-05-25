@@ -26,10 +26,19 @@ public class statePagingAdapter extends PagedListAdapter<State, stateViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull stateViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull stateViewHolder holder, final int position) {
         final State currentItem = getItem(position);
         if(currentItem!=null){
             holder.bind(currentItem);
+
+            if (clickListener != null) {
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        clickListener.onItemClick(v, position);
+                    }
+                });
+            }
         }
     }
 
