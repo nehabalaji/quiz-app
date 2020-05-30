@@ -26,4 +26,7 @@ public interface StateDao {
 
     @Update
     void updateState(State state);
+
+    @Query("SELECT DISTINCT * FROM state ORDER BY RANDOM() LIMIT 4")
+    List<State> getQuizState();
 }

@@ -8,8 +8,11 @@ import androidx.paging.PagedList;
 
 import com.example.quizapp.data.State;
 
+import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class stateRepository {
 
@@ -69,5 +72,15 @@ public class stateRepository {
                 Page_size
         ).build();
         return data;
+    }
+
+    public Future<List<State>> getQuizStates(){
+        Callable<List<State>> callable = new Callable<List<State>>() {
+            @Override
+            public List<State> call() throws Exception {
+                return mStateDao.getQuizState();
+            }
+        };
+        return executor.submit(callable);
     }
 }
