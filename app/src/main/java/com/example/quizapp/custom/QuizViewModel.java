@@ -26,9 +26,7 @@ public class QuizViewModel extends AndroidViewModel {
     private void loadGame(){
         try {
             quizData.postValue(mStateRepository.getQuizStates().get());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
     }
