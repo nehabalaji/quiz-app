@@ -2,10 +2,13 @@ package com.example.quizapp;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+
+import androidx.core.app.NotificationCompat;
 
 import com.example.quizapp.data.State;
 
@@ -24,5 +27,18 @@ public class Notifications {
         }
 
         Intent intent = new Intent(context, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, NOTIFICATION_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        String title = "Daily Quiz Time";
+        String notificationContent = "What is the capital of "+state.getStateName()+" ?";
+
+        NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
+                .setContentTitle(title)
+                .setContentText(notificationContent)
+                .setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setAutoCancel(true);
+
+        notificationManager.notify(NOTIFICATION_ID, nBuilder.build());
     }
 }
