@@ -29,4 +29,7 @@ public interface StateDao {
 
     @Query("SELECT DISTINCT * FROM state ORDER BY RANDOM() LIMIT 4")
     List<State> getQuizState();
+
+    @Query("SELECT * FROM State ORDER BY RANDOM() LIMIT 1")
+    State getRandomState();
 }

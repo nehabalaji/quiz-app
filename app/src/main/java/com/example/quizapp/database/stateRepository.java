@@ -2,6 +2,7 @@ package com.example.quizapp.database;
 
 import android.app.Application;
 
+import androidx.annotation.WorkerThread;
 import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
@@ -45,6 +46,7 @@ public class stateRepository {
             public void run() {
                 mStateDao.insertstate(state);
             }
+
         });
     }
 
@@ -82,5 +84,10 @@ public class stateRepository {
             }
         };
         return executor.submit(callable);
+    }
+
+    @WorkerThread
+    public State getRandomState(){
+        return mStateDao.getRandomState();
     }
 }
