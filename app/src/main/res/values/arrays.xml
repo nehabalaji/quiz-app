@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sorting_method_names" />
+    <string-array name="sorting_method_values" />
+    <string-array name="night_mode" />
+    <string-array name="night_mode_value" />
+</resources>
