@@ -3,8 +3,11 @@ package com.example.quizapp;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
+import androidx.arch.core.util.Function;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 import androidx.paging.PagedList;
 
 import com.example.quizapp.data.State;
@@ -17,10 +20,31 @@ public class StateViewModel extends AndroidViewModel {
    public stateRepository mStateRepository;
    public LiveData<PagedList<State>> pagedListLiveData;
 
+   private MutableLiveData<String> sortOrderChanged = new MutableLiveData<>();
+
     public StateViewModel(@NonNull Application application) {
         super(application);
         mStateRepository = stateRepository.getStateRepository(application);
-        pagedListLiveData =  mStateRepository.getAllStates();
+        sortOrderChanged.setValue("id");
+        pagedListLiveData = Transformations.switchMap(sortOrderChanged, new Function<String, LiveData<PagedList<State>>>() {
+            @Override
+            public LiveData<PagedList<State>> apply(String input) {
+                return mStateRepository.getAllStates(input);
+            }
+        });
+    }
+
+    public void changeSortingOrder(String sortBy){
+        switch (sortBy){
+            case "Name" : sortBy = "State";
+            break;
+
+            case "Capital" : sortBy = "capital";
+            break;
+
+            case "ID" : sortBy = "id";
+        }
+        sortOrderChanged.postValue(sortBy);
     }
 
     public void Insert(State state){

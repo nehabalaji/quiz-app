@@ -6,6 +6,8 @@ import androidx.annotation.WorkerThread;
 import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
+import androidx.sqlite.db.SimpleSQLiteQuery;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import com.example.quizapp.data.State;
 
@@ -68,9 +70,9 @@ public class stateRepository {
         });
     }
 
-    public LiveData<PagedList<State>> getAllStates(){
-        LiveData<PagedList<State>> data = new LivePagedListBuilder<>(
-                mStateDao.loadAllState(),
+    public LiveData<PagedList<State>> getAllStates(String sortBy){
+        LiveData data = new LivePagedListBuilder<>(
+                mStateDao.getAllSortedStates(constructQuery(sortBy)),
                 Page_size
         ).build();
         return data;
@@ -89,5 +91,10 @@ public class stateRepository {
     @WorkerThread
     public State getRandomState(){
         return mStateDao.getRandomState();
+    }
+
+    private SupportSQLiteQuery constructQuery(String sortBy){
+        String query = "SELECT * FROM State ORDER BY " + sortBy + " ASC";
+        return new SimpleSQLiteQuery(query);
     }
 }

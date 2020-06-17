@@ -6,11 +6,13 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.paging.PagedList;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -28,6 +30,7 @@ public class ListActivity extends AppCompatActivity {
     public static final int NEW_STATE_REQUEST_CODE = 2;
     private StateViewModel stateViewModel;
     private State currentState;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,10 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         stateViewModel = new ViewModelProvider(this).get(StateViewModel.class);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String sort = sharedPreferences.getString("list_preference_1", "id");
+        stateViewModel.changeSortingOrder(sort);
+
         RecyclerView recyclerView = findViewById(R.id.stateAndCapital);
         final statePagingAdapter mStatePagingAdapter = new statePagingAdapter();
         recyclerView.setAdapter(mStatePagingAdapter);
@@ -86,9 +93,18 @@ public class ListActivity extends AppCompatActivity {
                 stateViewModel.Delete(currentState);
                 snackbar.show();
             }
+
+
         });
 
+        sharedPreferences.registerOnSharedPreferenceChangeListener(listener);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    @Override
+    protected void onStop() {
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
+        super.onStop();
     }
 
     private void launchUpdateStateACtivity(State currentState) {
@@ -98,4 +114,14 @@ public class ListActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_ID, currentState.getId());
         startActivityForResult(intent, UPDATE_STATE_REQUEST_CODE);
     }
+
+    private SharedPreferences.OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if(key.equals("list_preference_1")){
+                String s = sharedPreferences.getString(key, "id");
+                stateViewModel.changeSortingOrder(s);
+            }
+        }
+    };
 }

@@ -1,4 +1,27 @@
 <resources>
     <string name="app_name">quizApp</string>
+    
+    <string name="list_action">list</string>
     <string name="settings">Settings</string>
+
+    <string name="name">State</string>
+    <string name="capital">Capital</string>
+    <string name="id">ID</string>
+
+    <string name="add">ADD</string>
+
+    <string name="pref_key_night" translatable="false">key_night_mode</string>
+    <string name="pref_night_title">Night Mode</string>
+    <string name="pref_night_summary">Select a dark or a light theme</string>
+
+    <string name="pref_night_dialogue">Set Night mode</string>
+
+    <string name="pref_night_auto" translatable="false">auto</string>
+    <string name="pref_night_on" translatable="false">on</string>
+    <string name="pref_night_off" translatable="false">off</string>
+
+    <string name="night_mode_auto">Automatic</string>
+    <string name="night_mode_on">Night mode</string>
+    <string name="night_mode_off">Day mode</string>
+
 </resources>

@@ -6,7 +6,9 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RawQuery;
 import androidx.room.Update;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import com.example.quizapp.data.State;
 
@@ -17,6 +19,9 @@ public interface StateDao {
 
     @Query("SELECT * FROM State")
     DataSource.Factory<Integer, State> loadAllState();
+
+    @RawQuery(observedEntities = State.class)
+    DataSource.Factory<Integer, State> getAllSortedStates(SupportSQLiteQuery query);
 
     @Insert
     void insertstate(State state);

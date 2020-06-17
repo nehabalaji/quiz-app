@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="sorting_method_names" />
-    <string-array name="sorting_method_values" />
-    <string-array name="night_mode" />
-    <string-array name="night_mode_value" />
+    <string-array name="sorting_method_names" >
+        <item>@string/name</item>
+        <item>@string/capital</item>
+        <item>@string/id</item>
+    </string-array>
+    <string-array name="sorting_method_values" >
+        <item>State</item>
+        <item>id</item>
+        <item>Capital</item>
+    </string-array>
+    <string-array name="night_mode" >
+        <item>@string/night_mode_auto</item>
+        <item>@string/night_mode_on</item>
+        <item>@string/night_mode_off</item>
+    </string-array>
+    <string-array name="night_mode_value" >
+        <item>@string/pref_night_auto</item>
+        <item>@string/pref_night_on</item>
+        <item>@string/pref_night_off</item>
+    </string-array>
 </resources>
