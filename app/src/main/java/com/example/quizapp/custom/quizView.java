@@ -24,10 +24,12 @@ public class quizView extends LinearLayout {
 
     public quizView(Context context) {
         super(context);
+        initRadios();
     }
 
     public quizView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        initRadios();
     }
 
     void initRadios(){
@@ -64,15 +66,17 @@ public class quizView extends LinearLayout {
 
         correctOptionId = radios[correctOption].getId();
 
-        for(int i=0, j=0; i<4; i++, j++){
-            if(i==correctOption){
+        for(int i=0, j=0; i<4; i++, j++) {
+            if (i == correctOption) {
                 optionsRadio.addView(radios[correctOption]);
                 continue;
+            } else {
+                radios[i] = new RadioButton(getContext());
+                radios[i].setId(View.generateViewId());
+                radios[i].setText(states.get(j).getCapitalName());
+                optionsRadio.addView(radios[i]);
             }
-            radios[i] = new RadioButton(getContext());
-            radios[i].setId(View.generateViewId());
-            radios[i].setText(states.get(j).getCapitalName());
-            optionsRadio.addView(radios[i]);
+            initListeners();
         }
     }
 

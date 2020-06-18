@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.quizapp.data.State;
@@ -39,7 +41,7 @@ public class ListActivity extends AppCompatActivity {
 
         stateViewModel = new ViewModelProvider(this).get(StateViewModel.class);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String sort = sharedPreferences.getString("list_preference_1", "id");
+        String sort = sharedPreferences.getString("list_preference_1", "stateID");
         stateViewModel.changeSortingOrder(sort);
 
         RecyclerView recyclerView = findViewById(R.id.stateAndCapital);
@@ -62,6 +64,11 @@ public class ListActivity extends AppCompatActivity {
         });
 
         FloatingActionButton floatingActionButton = findViewById(R.id.floatingButton);
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +79,7 @@ public class ListActivity extends AppCompatActivity {
 
         final ConstraintLayout constraintLayout = findViewById(R.id.list);
 
-        final Snackbar snackbar = Snackbar.make(constraintLayout, "State is deleted", Snackbar.LENGTH_LONG)
+        final Snackbar snackbar = Snackbar.make(constraintLayout, "State is deleted", BaseTransientBottomBar.LENGTH_LONG)
                 .setAction("Undo", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -103,23 +110,32 @@ public class ListActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
         super.onStop();
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
     }
 
     private void launchUpdateStateACtivity(State currentState) {
         Intent intent = new Intent(ListActivity.this, addStateActivity.class);
         intent.putExtra(EXTRA_STATE_NAME, currentState.getStateName());
         intent.putExtra(EXTRA_CAPITAL_NAME, currentState.getCapitalName());
-        intent.putExtra(EXTRA_ID, currentState.getId());
+        intent.putExtra(EXTRA_ID, currentState.getStateID());
         startActivityForResult(intent, UPDATE_STATE_REQUEST_CODE);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private SharedPreferences.OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if(key.equals("list_preference_1")){
-                String s = sharedPreferences.getString(key, "id");
+                String s = sharedPreferences.getString(key, "stateID");
                 stateViewModel.changeSortingOrder(s);
             }
         }

@@ -15,13 +15,14 @@ public class addStateActivity extends AppCompatActivity {
     public static final String EXTRA_STATE_NAME = "extra_state_name_to_be_updated";
     public static final String EXTRA_CAPITAL_NAME = "extra_state_capital_to_be_updated";
     public static final String EXTRA_ID = "extra_state_id";
+    private StateViewModel stateViewModel;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_state);
 
-        final StateViewModel stateViewModel = new ViewModelProvider(this).get(StateViewModel.class);
+        stateViewModel = new ViewModelProvider(this).get(StateViewModel.class);
 
 
         final EditText state = findViewById(R.id.stateET);
@@ -31,18 +32,18 @@ public class addStateActivity extends AppCompatActivity {
         final Bundle extras = getIntent().getExtras();
 
         if(extras!=null){
-            String stateName = extras.getString(EXTRA_STATE_NAME);
+            String stateName = extras.getString(EXTRA_STATE_NAME, "");
             if(!stateName.isEmpty()){
                 state.setText(stateName);
             }
 
-            String capitalName = extras.getString(EXTRA_CAPITAL_NAME);
+            String capitalName = extras.getString(EXTRA_CAPITAL_NAME, "");
             if(!capitalName.isEmpty()){
                 capital.setText(capitalName);
                 capital.setSelection(capitalName.length());
                 capital.requestFocus();
             }
-            add.setText("Save");
+            add.setText(R.string.save);
         }
 
         add.setOnClickListener(new View.OnClickListener() {

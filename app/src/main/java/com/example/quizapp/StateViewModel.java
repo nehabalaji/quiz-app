@@ -25,7 +25,7 @@ public class StateViewModel extends AndroidViewModel {
     public StateViewModel(@NonNull Application application) {
         super(application);
         mStateRepository = stateRepository.getStateRepository(application);
-        sortOrderChanged.setValue("id");
+        sortOrderChanged.setValue("stateID");
         pagedListLiveData = Transformations.switchMap(sortOrderChanged, new Function<String, LiveData<PagedList<State>>>() {
             @Override
             public LiveData<PagedList<State>> apply(String input) {
@@ -39,10 +39,11 @@ public class StateViewModel extends AndroidViewModel {
             case "Name" : sortBy = "State";
             break;
 
-            case "Capital" : sortBy = "capital";
+            case "Capital" : sortBy = "Capital";
             break;
 
-            case "ID" : sortBy = "id";
+            case "ID" : sortBy = "stateID";
+            break;
         }
         sortOrderChanged.postValue(sortBy);
     }

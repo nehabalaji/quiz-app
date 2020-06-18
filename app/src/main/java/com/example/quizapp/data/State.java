@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey;
 public class State {
 
     @PrimaryKey(autoGenerate = true)
-    private long id;
+    private long stateID;
     @NonNull
     @ColumnInfo(name = "State")
     private String stateName;
@@ -23,10 +23,10 @@ public class State {
 
     }
 
-    public State(long stateId, @NonNull String mStateName, @NonNull String mCapitalName){
+    public State(long stateID, @NonNull String mStateName, @NonNull String mCapitalName){
         this.stateName = mStateName;
         this.capitalName = mCapitalName;
-        this.id = stateId;
+        this.stateID = stateID;
     }
 
     @Ignore
@@ -36,12 +36,12 @@ public class State {
         this.capitalName = mCapitalName;
     }
 
-    public long getId() {
-        return id;
+    public long getStateID() {
+        return stateID;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setStateID(long stateID) {
+        this.stateID = stateID;
     }
 
     public String getStateName() {

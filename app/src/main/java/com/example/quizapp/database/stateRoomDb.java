@@ -22,33 +22,35 @@ import java.io.InputStreamReader;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {State.class}, version = 1, exportSchema = false)
+@Database(entities = {State.class}, version = 2, exportSchema = false)
 public abstract class stateRoomDb extends RoomDatabase {
 
     public abstract StateDao stateDao();
-    private static stateRoomDb INSTANCE;
+    private static stateRoomDb INSTANCE = null;
     private static ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public static stateRoomDb getInstance(final Context context){
         if(INSTANCE == null ){
-            synchronized (stateRoomDb.class){
-                INSTANCE = Room.
-                        databaseBuilder(context.getApplicationContext(), stateRoomDb.class, "State")
-                        .addCallback(new Callback() {
-                            @Override
-                            public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                                super.onCreate(db);
-                                executorService.execute(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        prePopulate(context.getAssets(), INSTANCE.stateDao());
-                                    }
-                                });
-                            }
-                        })
-                        .fallbackToDestructiveMigration()
-                        .build();
+            synchronized (stateRoomDb.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = Room.
+                            databaseBuilder(context.getApplicationContext(), stateRoomDb.class, "State")
+                            .addCallback(new Callback() {
+                                @Override
+                                public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                                    super.onCreate(db);
+                                    executorService.execute(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            prePopulate(context.getAssets(), INSTANCE.stateDao());
+                                        }
+                                    });
+                                }
+                            })
+                            .fallbackToDestructiveMigration()
+                            .build();
 
+                }
             }
         }
         return INSTANCE;
@@ -81,7 +83,7 @@ public abstract class stateRoomDb extends RoomDatabase {
             JSONObject states = new JSONObject(json);
             JSONObject section = states.getJSONObject("sections");
             populateFromJson(section.getJSONArray("States (A-L)"), stateDao);
-            populateFromJson(section.getJSONArray("States (A-L)"), stateDao);
+            populateFromJson(section.getJSONArray("States (M-Z)"), stateDao);
             populateFromJson(section.getJSONArray("Union Territories"), stateDao);
         } catch (JSONException e) {
             e.printStackTrace();
