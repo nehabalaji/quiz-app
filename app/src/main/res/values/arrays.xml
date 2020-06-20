@@ -7,8 +7,9 @@
     </string-array>
     <string-array name="sorting_method_values" >
         <item>State</item>
-        <item>stateID</item>
         <item>Capital</item>
+        <item>stateID</item>
+
     </string-array>
     <string-array name="night_mode" >
         <item>@string/night_mode_auto</item>
@@ -19,5 +20,13 @@
         <item>@string/pref_night_auto</item>
         <item>@string/pref_night_on</item>
         <item>@string/pref_night_off</item>
+    </string-array>
+    <string-array name="no_of_options" >
+        <item>Three</item>
+        <item>Four</item>
+    </string-array>
+    <string-array name="no_of_options_values" >
+        <item>3</item>
+        <item>4</item>
     </string-array>
 </resources>

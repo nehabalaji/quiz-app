@@ -97,4 +97,14 @@ public class stateRepository {
         String query = "SELECT * FROM State ORDER BY " + sortBy + " ASC";
         return new SimpleSQLiteQuery(query);
     }
+
+    public Future<List<State>> getQuizStates(final int value){
+        Callable<List<State>> callable = new Callable<List<State>>() {
+            @Override
+            public List<State> call() throws Exception {
+                return mStateDao.getQuizState(value);
+            }
+        };
+        return executor.submit(callable);
+    }
 }

@@ -32,7 +32,10 @@ public interface StateDao {
     @Update
     void updateState(State state);
 
-    @Query("SELECT DISTINCT * FROM state ORDER BY RANDOM() LIMIT 4")
+    @Query("SELECT DISTINCT * FROM State ORDER BY RANDOM() LIMIT :value")
+    List<State> getQuizState(int value);
+
+    @Query("SELECT DISTINCT * FROM State ORDER BY RANDOM() LIMIT 4")
     List<State> getQuizState();
 
     @Query("SELECT * FROM State ORDER BY RANDOM() LIMIT 1")

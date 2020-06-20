@@ -48,6 +48,7 @@ public class StateViewModel extends AndroidViewModel {
         sortOrderChanged.postValue(sortBy);
     }
 
+
     public void Insert(State state){
         mStateRepository.insertState(state);
     }
