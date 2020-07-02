@@ -3,6 +3,8 @@ package com.example.quizapp;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
@@ -11,6 +13,7 @@ import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
@@ -58,5 +61,21 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 return true;
             }
         });
+
+        ListPreference darkmode = findPreference(getString(R.string.pref_key_night));
+        darkmode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                String theme = (String) newValue;
+                NightMode.NightModeEnum value = NightMode.NightModeEnum.valueOf(theme.toUpperCase(Locale.US));
+                updateTheme(value.value);
+                return true;
+            }
+        });
+    }
+
+    private void updateTheme(int value) {
+        AppCompatDelegate.setDefaultNightMode(value);
+        requireActivity().recreate();
     }
 }

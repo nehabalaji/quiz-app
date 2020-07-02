@@ -129,7 +129,7 @@ public class ListActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-        
+
     }
 
     private SharedPreferences.OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
