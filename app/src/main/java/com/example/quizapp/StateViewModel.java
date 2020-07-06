@@ -19,6 +19,7 @@ public class StateViewModel extends AndroidViewModel {
 
    public stateRepository mStateRepository;
    public LiveData<PagedList<State>> pagedListLiveData;
+   int count =0;
 
    private MutableLiveData<String> sortOrderChanged = new MutableLiveData<>();
 
