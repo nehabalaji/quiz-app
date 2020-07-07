@@ -16,7 +16,7 @@ public class QuizViewModel extends AndroidViewModel {
 
     private stateRepository mStateRepository;
     public MutableLiveData<List<State>> quizData = new MutableLiveData<>();
-//    public MutableLiveData<Integer> count = new MutableLiveData<>();
+    public MutableLiveData<Integer> countValue = new MutableLiveData<>();
     int count = 0 ;
 
     public QuizViewModel(@NonNull Application application) {
@@ -30,6 +30,7 @@ public class QuizViewModel extends AndroidViewModel {
             try {
                 quizData.postValue(mStateRepository.getQuizStates().get());
                 count++;
+                countValue.setValue(count);
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
