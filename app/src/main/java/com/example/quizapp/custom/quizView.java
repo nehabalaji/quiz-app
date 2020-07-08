@@ -2,14 +2,17 @@ package com.example.quizapp.custom;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 
+import com.example.quizapp.R;
 import com.example.quizapp.data.State;
 
 import java.util.List;
@@ -45,9 +48,9 @@ public class quizView extends LinearLayout {
         this.optionsClickListener = optionsClickedListener;
     }
 
-    public void setData(List<State> states){
+    public void setData(List<State> states, int value){
         Random random = new Random(System.currentTimeMillis());
-        int correctOption = random.nextInt(4);
+        int correctOption = random.nextInt(value);
 
         correctState = states.get(correctOption);
 
@@ -59,14 +62,14 @@ public class quizView extends LinearLayout {
 
         this.addView(optionsRadio);
 
-        RadioButton[] radios = new RadioButton[4];
+        RadioButton[] radios = new RadioButton[value];
         radios[correctOption] = new RadioButton(getContext());
         radios[correctOption].setId(View.generateViewId());
         radios[correctOption].setText(correctState.getCapitalName());
 
         correctOptionId = radios[correctOption].getId();
 
-        for(int i=0, j=0; i<4; i++, j++) {
+        for(int i=0, j=0; i<value; i++, j++) {
             if (i == correctOption) {
                 optionsRadio.addView(radios[correctOption]);
                 continue;
@@ -95,6 +98,16 @@ public class quizView extends LinearLayout {
             }
         });
     }
+
+//    public void GameResult(){
+//        reset();
+//        TextView result = new TextView(getContext());
+//        String r = "You have answered";
+//        result.setText(r);
+//        result.setTextColor(getResources().getColor(R.color.red));
+//        this.addView(result);
+//        Log.v("TAG", result.toString());
+//    }
 
     public void reset(){
         optionsRadio.removeAllViews();

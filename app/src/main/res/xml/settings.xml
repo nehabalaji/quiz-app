@@ -27,7 +27,7 @@
     <ListPreference
         android:entries="@array/no_of_options"
         android:entryValues="@array/no_of_options_values"
-        android:defaultValue="4"
+        android:defaultValue="Four"
         android:key="list_preference_2"
         android:title="No. of options"/>
 

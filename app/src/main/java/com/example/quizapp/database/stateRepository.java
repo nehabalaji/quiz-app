@@ -78,15 +78,15 @@ public class stateRepository {
         return data;
     }
 
-    public Future<List<State>> getQuizStates(){
-        Callable<List<State>> callable = new Callable<List<State>>() {
-            @Override
-            public List<State> call() throws Exception {
-                return mStateDao.getQuizState();
-            }
-        };
-        return executor.submit(callable);
-    }
+//    public Future<List<State>> getQuizStates(){
+//        Callable<List<State>> callable = new Callable<List<State>>() {
+//            @Override
+//            public List<State> call() throws Exception {
+//                return mStateDao.getQuizState();
+//            }
+//        };
+//        return executor.submit(callable);
+//    }
 
     @WorkerThread
     public State getRandomState(){
@@ -98,13 +98,14 @@ public class stateRepository {
         return new SimpleSQLiteQuery(query);
     }
 
-    public Future<List<State>> getQuizStates(final int value){
-        Callable<List<State>> callable = new Callable<List<State>>() {
-            @Override
-            public List<State> call() throws Exception {
-                return mStateDao.getQuizState(value);
-            }
-        };
-        return executor.submit(callable);
+
+    public LiveData<List<State>> getQuizState(int value){
+        return mStateDao.getQuizState(constructOptionsQuery(value));
     }
+
+    private SupportSQLiteQuery constructOptionsQuery(int value){
+        String q = "SELECT DISTINCT * FROM State ORDER BY RANDOM() LIMIT "+value;
+        return new SimpleSQLiteQuery(q);
+    }
+
 }

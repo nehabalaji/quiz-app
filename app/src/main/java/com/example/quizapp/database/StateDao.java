@@ -35,6 +35,9 @@ public interface StateDao {
     @Query("SELECT DISTINCT * FROM State ORDER BY RANDOM() LIMIT :value")
     List<State> getQuizState(int value);
 
+    @RawQuery(observedEntities = State.class)
+    LiveData<List<State>> getQuizState(SupportSQLiteQuery supportSQLiteQuery);
+
     @Query("SELECT DISTINCT * FROM State ORDER BY RANDOM() LIMIT 4")
     List<State> getQuizState();
 
