@@ -65,6 +65,5 @@ public class statePagingAdapter extends PagedListAdapter<State, stateViewHolder>
             return oldItem.equals(newItem);
         }
     };
-
 }
 
